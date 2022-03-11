@@ -1,4 +1,4 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
@@ -17,11 +17,11 @@ function App() {
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <div>
       <App />
     </div>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 );
 
