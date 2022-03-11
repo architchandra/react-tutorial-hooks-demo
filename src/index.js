@@ -1,25 +1,39 @@
-import { StrictMode } from 'react';
+import { StrictMode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 
 
-function App() {
+function App(props) {
+  const [count, setCount] = useState(props.count);
+
   return (
     <div>
       <p>
-        The current count is 0
+        The current count is {count}.
       </p>
+      <button onClick={() => setCount(count + 1)}>
+        -1
+      </button>
+      <button onClick={() => setCount(props.count)}>
+        Reset
+      </button>
+      <button onClick={() => setCount(count + 1)}>
+        +1
+      </button>
     </div>
   );
 }
+App.defaultProps = {
+  count: 0,
+};
 
 
 
 ReactDOM.render(
   <StrictMode>
     <div>
-      <App />
+      <App count={2} />
     </div>
   </StrictMode>,
   document.getElementById('root')
