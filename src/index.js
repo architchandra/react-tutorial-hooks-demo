@@ -27,9 +27,15 @@ function NotesApp() {
     setNotes(notes.filter((note) => note.title !== title));
   }
 
+  // Works like componentDidMount
+  useEffect(() => {
+    console.log('This should run only once');
+  }, []);
+  
+  // Make useEffect run only when its dependencies' values change
   useEffect(() => {
     window.localStorage.setItem('notes', JSON.stringify(notes));
-  });
+  }, [notes]);
 
   return (
     <div>
