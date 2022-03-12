@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
@@ -7,6 +7,10 @@ import reportWebVitals from './reportWebVitals';
 function App(props) {
   const [count, setCount] = useState(props.count);
   const [text, setText] = useState('');
+
+  useEffect(() => {
+    document.title = count;
+  });
 
   return (
     <div>
