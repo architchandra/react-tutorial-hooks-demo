@@ -5,8 +5,8 @@ import reportWebVitals from './reportWebVitals';
 
 
 function NotesApp() {
-  const notesData = JSON.parse(window.localStorage.getItem('notes'));
-  const [notes, setNotes] = useState(notesData || []);
+  // useState runs before useEffect
+  const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
@@ -27,9 +27,13 @@ function NotesApp() {
     setNotes(notes.filter((note) => note.title !== title));
   }
 
-  // Works like componentDidMount
+  // Works like componentDidMount (fires only after first render—no deps)
   useEffect(() => {
-    console.log('This should run only once');
+    const notesData = JSON.parse(window.localStorage.getItem('notes'));
+
+    if (notesData) {
+      setNotes(notesData);
+    }
   }, []);
   
   // Make useEffect run only when its dependencies' values change
