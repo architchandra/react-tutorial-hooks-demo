@@ -4,42 +4,59 @@ import reportWebVitals from './reportWebVitals';
 
 
 
-function App(props) {
-  const [count, setCount] = useState(props.count);
-  const [text, setText] = useState('');
+function NotesApp() {
+  const notesData = JSON.parse(window.localStorage.getItem('notes'));
+  const [notes, setNotes] = useState(notesData || []);
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+
+  function addNote(e) {
+    e.preventDefault();
+    setNotes([
+      ...notes,
+      {
+        title,
+        body,
+      },
+    ]);
+    setTitle('');
+    setBody('');
+  };
+
+  function removeNote(title) {
+    setNotes(notes.filter((note) => note.title !== title));
+  }
 
   useEffect(() => {
-    document.title = count;
+    window.localStorage.setItem('notes', JSON.stringify(notes));
   });
 
   return (
     <div>
-      <p>
-        The current {text || 'count'} is {count}.
-      </p>
-      <button onClick={() => setCount(count + 1)}>
-        -1
-      </button>
-      <button onClick={() => setCount(props.count)}>
-        Reset
-      </button>
-      <button onClick={() => setCount(count + 1)}>
-        +1
-      </button>
-      <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+      <h1>Notes</h1>
+      {notes.map((note) => (
+        <div key={note.title}>
+          <h3>{note.title}</h3>
+          <p>{note.body}</p>
+          <button onClick={() => removeNote(note.title)}>Remove Note</button>
+        </div>
+      ))}
+      <p>Add Note</p>
+      <form onSubmit={addNote}>
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value || '')} />
+        <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+        <button>Add Note</button>
+      </form>
     </div>
   );
 }
-App.defaultProps = {
-  count: 0,
-};
 
 
 
 ReactDOM.render(
   <StrictMode>
     <div>
-      <App count={2} />
+      <NotesApp />
     </div>
   </StrictMode>,
   document.getElementById('root')
