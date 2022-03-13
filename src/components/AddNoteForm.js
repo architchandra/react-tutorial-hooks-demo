@@ -20,14 +20,14 @@ function AddNoteForm() {
   };
   
   return (
-    <div>
+    <>
       <p>Add Note</p>
       <form onSubmit={addNote}>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value || '')} />
         <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
         <button>Add Note</button>
       </form>
-    </div>
+    </>
   );
 }
 
