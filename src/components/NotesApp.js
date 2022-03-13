@@ -1,25 +1,13 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import notesReducer from '../reducers/notes';
 import NotesList from './NotesList';
+import AddNoteForm from './AddNoteForm';
 
 
 
 function NotesApp() {
   // useReducer and useState run before useEffect
   const [notes, dispatch] = useReducer(notesReducer, []);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-
-  function addNote(e) {
-    e.preventDefault();
-    dispatch({
-      type: 'ADD_NOTE',
-      title,
-      body,
-    });
-    setTitle('');
-    setBody('');
-  };
 
   function removeNote(title) {
     dispatch({
@@ -49,12 +37,7 @@ function NotesApp() {
     <div>
       <h1>Notes</h1>
       <NotesList notes={notes} removeNote={removeNote} />
-      <p>Add Note</p>
-      <form onSubmit={addNote}>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value || '')} />
-        <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-        <button>Add Note</button>
-      </form>
+      <AddNoteForm dispatch={dispatch} />
     </div>
   );
 }
