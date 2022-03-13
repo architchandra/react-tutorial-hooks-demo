@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
 import notesReducer from '../reducers/notes';
-import Note from './Note';
+import NotesList from './NotesList';
 
 
 
@@ -48,9 +48,7 @@ function NotesApp() {
   return (
     <div>
       <h1>Notes</h1>
-      {notes.map((note) => (
-        <Note note={note} removeNote={removeNote} key={note.title} />
-      ))}
+      <NotesList notes={notes} removeNote={removeNote} />
       <p>Add Note</p>
       <form onSubmit={addNote}>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value || '')} />
