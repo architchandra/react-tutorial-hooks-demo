@@ -2,19 +2,13 @@ import { useEffect, useReducer } from 'react';
 import notesReducer from '../reducers/notes';
 import NotesList from './NotesList';
 import AddNoteForm from './AddNoteForm';
+import NotesContext from '../context/notes-context';
 
 
 
 function NotesApp() {
   // useReducer and useState run before useEffect
   const [notes, dispatch] = useReducer(notesReducer, []);
-
-  function removeNote(title) {
-    dispatch({
-      type: 'REMOVE_NOTE',
-      title,
-    });
-  }
 
   // Works like componentDidMount (fires only after first render—no deps)
   useEffect(() => {
@@ -34,11 +28,11 @@ function NotesApp() {
   }, [notes]);
 
   return (
-    <div>
+    <NotesContext.Provider value={{ notes, dispatch }}>
       <h1>Notes</h1>
-      <NotesList notes={notes} removeNote={removeNote} />
-      <AddNoteForm dispatch={dispatch} />
-    </div>
+      <NotesList />
+      <AddNoteForm />
+    </NotesContext.Provider>
   );
 }
 
